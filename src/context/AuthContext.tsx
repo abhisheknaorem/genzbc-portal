@@ -20,19 +20,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      setIsLoading(false);
+      return;
+    }
+
     authApi.me()
       .then((res) => setUser(res.data.data as AuthUser))
-      .catch(() => setUser(null))
+      .catch(() => {
+        localStorage.removeItem('accessToken');
+        setUser(null);
+      })
       .finally(() => setIsLoading(false));
   }, []);
 
   const login = useCallback(async (email: string, password: string) => {
     const res = await authApi.login(email, password);
-    setUser(res.data.data.user as AuthUser);
+    const { user: userData, accessToken } = res.data.data;
+    localStorage.setItem('accessToken', accessToken);
+    setUser(userData as AuthUser);
   }, []);
 
   const logout = useCallback(async () => {
     await authApi.logout();
+    localStorage.removeItem('accessToken');
     setUser(null);
   }, []);
 
