@@ -1,27 +1,37 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import toast from 'react-hot-toast';
 
 export default function LoginPage() {
-  const { login } = useAuth();
+  const { user, login } = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      router.push('/dashboard');
+    }
+  }, [user, router]);
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (!email || !password) { toast.error('Please fill in all fields'); return; }
     setLoading(true);
     try {
+      console.log('Attempting login...');
       await login(email, password);
+      console.log('Login successful, redirecting to dashboard...');
       toast.success('Welcome back to GenZ BITCOIN TREASURY');
       router.push('/dashboard');
     } catch (err: unknown) {
+      console.error('Login error:', err);
       toast.error((err as { response?: { data?: { message?: string } } })?.response?.data?.message || 'Invalid email or password');
     } finally { setLoading(false); }
   }
