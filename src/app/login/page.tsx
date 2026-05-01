@@ -16,20 +16,17 @@ export default function LoginPage() {
   // Redirect if already logged in
   useEffect(() => {
     if (user) {
-      router.push('/dashboard');
+      window.location.href = '/dashboard';
     }
-  }, [user, router]);
+  }, [user]);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (!email || !password) { toast.error('Please fill in all fields'); return; }
     setLoading(true);
     try {
-      console.log('Attempting login...');
       await login(email, password);
-      console.log('Login successful, redirecting to dashboard...');
       toast.success('Welcome back to GenZ BITCOIN TREASURY');
-      router.push('/dashboard');
     } catch (err: unknown) {
       console.error('Login error:', err);
       toast.error((err as { response?: { data?: { message?: string } } })?.response?.data?.message || 'Invalid email or password');

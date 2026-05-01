@@ -42,7 +42,7 @@ export default function MemberCard({ member, isAdmin, deleting, onClick, onDelet
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '24px', borderTop: '1px solid rgba(0,0,0,0.04)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#f4f4f5', padding: '6px 14px', borderRadius: '12px', fontSize: '13px', fontWeight: 700, color: '#18181b' }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M6 3h12"/><path d="M6 8h12"/><path d="m6 13 8.5 8"/><path d="M10.6 13a5 5 0 0 0 0-10"/></svg>
           {member._count?.transactions ?? 0} Transactions
         </div>
         <div style={{ display: 'flex', gap: '10px' }} onClick={(e) => e.stopPropagation()}>

@@ -48,7 +48,7 @@ export default function AddTransactionModal({ memberId, onClose, onCreated }: Pr
       <div className="modal-content" style={{ maxWidth: '540px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '40px 40px 0' }}>
           <div><h2 style={{ fontSize: '24px', fontWeight: 800, color: '#09090b', letterSpacing: '-0.04em' }}>Record Transaction</h2><p style={{ fontSize: '14px', color: '#71717a', marginTop: '4px', fontWeight: 500 }}>Add a credit or debit entry for this member</p></div>
-          <button onClick={onClose} style={{ background: '#f4f4f5', border: 'none', color: '#71717a', cursor: 'pointer', display: 'flex', padding: '10px', borderRadius: '14px' }}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          <button onClick={onClose} style={{ background: '#f4f4f5', border: 'none', color: '#71717a', cursor: 'pointer', display: 'flex', padding: '10px', borderRadius: '14px' }}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg></button>
         </div>
 
         <form onSubmit={handleSubmit} style={{ padding: '40px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -57,8 +57,10 @@ export default function AddTransactionModal({ memberId, onClose, onCreated }: Pr
             <div style={{ display: 'flex', gap: '12px' }}>
               {(['credit', 'debit'] as const).map((t) => (
                 <button key={t} type="button" onClick={() => setForm(p => ({ ...p, type: t }))}
-                  style={{ flex: 1, padding: '14px', borderRadius: '14px', border: '2px solid', cursor: 'pointer', fontWeight: 700, fontSize: '14px', transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-                    ...(form.type === t ? (t === 'credit' ? { background: '#ecfdf5', color: '#059669', borderColor: '#10b981' } : { background: '#fef2f2', color: '#dc2626', borderColor: '#ef4444' }) : { background: '#ffffff', color: '#71717a', borderColor: '#e4e4e7' }) }}>
+                  style={{
+                    flex: 1, padding: '14px', borderRadius: '14px', border: '2px solid', cursor: 'pointer', fontWeight: 700, fontSize: '14px', transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                    ...(form.type === t ? (t === 'credit' ? { background: '#ecfdf5', color: '#059669', borderColor: '#10b981' } : { background: '#fef2f2', color: '#dc2626', borderColor: '#ef4444' }) : { background: '#ffffff', color: '#71717a', borderColor: '#e4e4e7' })
+                  }}>
                   {t === 'credit' ? '↑ Credit Entry' : '↓ Debit Entry'}
                 </button>
               ))}
@@ -69,7 +71,7 @@ export default function AddTransactionModal({ memberId, onClose, onCreated }: Pr
             <div>
               <label className="label" htmlFor="tx-amount">Amount *</label>
               <div style={{ position: 'relative' }}>
-                <span style={{ position: 'absolute', left: '18px', top: '50%', transform: 'translateY(-50%)', color: '#a1a1aa', fontSize: '14px', fontWeight: 700 }}>$</span>
+                <span style={{ position: 'absolute', left: '18px', top: '50%', transform: 'translateY(-50%)', color: '#a1a1aa', fontSize: '14px', fontWeight: 700 }}>₹</span>
                 <input id="tx-amount" type="number" className="input-field" placeholder="0.00" min="0.01" step="0.01" value={form.amount} onChange={(e) => setForm(p => ({ ...p, amount: e.target.value }))} style={{ paddingLeft: '36px' }} required />
               </div>
             </div>
@@ -83,13 +85,13 @@ export default function AddTransactionModal({ memberId, onClose, onCreated }: Pr
             <div onClick={() => fileRef.current?.click()} style={{ border: `2px dashed ${file ? '#18181b' : '#e4e4e7'}`, borderRadius: '20px', padding: '32px', textAlign: 'center', cursor: 'pointer', background: file ? 'rgba(0,0,0,0.01)' : '#ffffff', transition: 'all 0.3s' }}>
               {file ? (
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', color: '#18181b' }}>
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /></svg>
                   <span style={{ fontSize: '14px', fontWeight: 700 }}>{file.name}</span>
                   <button type="button" onClick={(e) => { e.stopPropagation(); setFile(null); if (fileRef.current) fileRef.current.value = ''; }} style={{ background: '#18181b', border: 'none', color: '#ffffff', cursor: 'pointer', borderRadius: '50%', width: '26px', height: '26px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', transition: 'transform 0.2s' }}>×</button>
                 </div>
               ) : (
                 <div>
-                  <svg style={{ margin: '0 auto 14px', color: '#a1a1aa' }} width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  <svg style={{ margin: '0 auto 14px', color: '#a1a1aa' }} width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
                   <p style={{ fontSize: '15px', color: '#18181b', fontWeight: 700 }}>Upload payment proof</p>
                   <p style={{ fontSize: '13px', color: '#71717a', marginTop: '4px', fontWeight: 500 }}>Drag and drop or click to browse</p>
                 </div>

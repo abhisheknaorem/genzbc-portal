@@ -10,7 +10,7 @@ interface Props {
 
 export default function TransactionTable({ transactions, loading, filters, onFiltersChange, total, page, totalPages, onPageChange }: Props) {
   function formatAmount(amount: number | string) {
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(typeof amount === 'string' ? parseFloat(amount) : amount);
+    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(typeof amount === 'string' ? parseFloat(amount) : amount);
   }
 
   return (
@@ -25,8 +25,8 @@ export default function TransactionTable({ transactions, loading, filters, onFil
         </div>
         <div style={{ flex: '1 1 160px' }}><label className="label">Start Date</label><input type="date" className="input-field" value={filters.dateFrom || ''} onChange={(e) => onFiltersChange({ ...filters, dateFrom: e.target.value, page: 1 })} style={{ padding: '12px 16px' }} /></div>
         <div style={{ flex: '1 1 160px' }}><label className="label">End Date</label><input type="date" className="input-field" value={filters.dateTo || ''} onChange={(e) => onFiltersChange({ ...filters, dateTo: e.target.value, page: 1 })} style={{ padding: '12px 16px' }} /></div>
-        <div style={{ flex: '1 1 120px' }}><label className="label">Min Amount</label><input type="number" className="input-field" placeholder="$ 0.00" value={filters.minAmount || ''} onChange={(e) => onFiltersChange({ ...filters, minAmount: e.target.value, page: 1 })} style={{ padding: '12px 16px' }} min="0" /></div>
-        <div style={{ flex: '1 1 120px' }}><label className="label">Max Amount</label><input type="number" className="input-field" placeholder="$ Max" value={filters.maxAmount || ''} onChange={(e) => onFiltersChange({ ...filters, maxAmount: e.target.value, page: 1 })} style={{ padding: '12px 16px' }} min="0" /></div>
+        <div style={{ flex: '1 1 120px' }}><label className="label">Min Amount</label><input type="number" className="input-field" placeholder="₹ 0.00" value={filters.minAmount || ''} onChange={(e) => onFiltersChange({ ...filters, minAmount: e.target.value, page: 1 })} style={{ padding: '12px 16px' }} min="0" /></div>
+        <div style={{ flex: '1 1 120px' }}><label className="label">Max Amount</label><input type="number" className="input-field" placeholder="₹ Max" value={filters.maxAmount || ''} onChange={(e) => onFiltersChange({ ...filters, maxAmount: e.target.value, page: 1 })} style={{ padding: '12px 16px' }} min="0" /></div>
         {(filters.type || filters.dateFrom || filters.dateTo || filters.minAmount || filters.maxAmount) && (
           <div style={{ display: 'flex', alignItems: 'flex-end', flex: '0 0 auto' }}>
             <button className="btn-secondary" style={{ padding: '14px 20px', color: '#ef4444', borderColor: '#fee2e2' }} onClick={() => onFiltersChange({ page: 1 })}>Reset Filters</button>
@@ -35,7 +35,7 @@ export default function TransactionTable({ transactions, loading, filters, onFil
       </div>
 
       <div style={{ fontSize: '14px', color: '#71717a', fontWeight: 600, marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
         {loading ? 'Retrieving records...' : `${total} Transaction record${total !== 1 ? 's' : ''}`}
       </div>
 
